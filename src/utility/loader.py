@@ -4,11 +4,11 @@ import json
 settings = None
 
 
-def get_settings():
+def get_settings(key: str):
     if settings is None:
         __parse_settings__()
 
-    return settings
+    return settings[key]
 
 
 def __parse_settings__():
