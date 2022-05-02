@@ -1,5 +1,8 @@
 {
     "screen_width": 800,
     "screen_height": 600,
-    "max_fps": 60
+    "max_fps": 60,
+    "start_position_x_axis": 240,
+    "start_position_y_axis": 350,
+    "platform_width": 100
 }
