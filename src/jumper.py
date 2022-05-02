@@ -21,10 +21,10 @@ class DoodleJump:
 
     def event(self, event):
         # ??
-        if event.type == QUIT:
+        if event.type == pygame.QUIT:
             sys.exit()
-        elif event.type == KEY_UP:
-            if event.type == K_ESCAPE:
+        elif event.type == pygame.KEYUP:
+            if event.type == pygame.K_ESCAPE:
                 if isinstance(self.location, GameLocation):
                     self.location = StartLocation(self)
                 elif isinstance(self.location, StartLocation):

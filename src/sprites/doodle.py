@@ -11,11 +11,11 @@ class Doodle(Sprite):
     image_r = pygame.image.load('src/assets/doodle_right.png')
     image_l = pygame.image.load('src/assets/doodle_left.png')
 
-    def __init__(self, **kwargs):
+    def __init__(self, name):
         pygame.sprite.Sprite.__init__(self)
-        self.name = kwargs['name']
-        self.x = kwargs['x_position']
-        self.y = kwargs['y_position']
+        self.name = name
+        self.x = 240
+        self.y = 350
         self.image = self.image_r
         self.image.set_colorkey(self.image.get_at((0, 0)))
         self.rect = self.image.get_rect()
@@ -31,6 +31,7 @@ class Doodle(Sprite):
         top = self.rect.top + self.rect.height * 0.9
         width = self.rect.width * 0.6
         height = self.rect.height * 0.1
+        return pygame.Rect(left, top, width, height)
 
     def set_x(self, x):
         if x < self.x:

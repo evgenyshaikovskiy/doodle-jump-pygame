@@ -1,12 +1,11 @@
 import pygame
-import string
 from pygame.locals import *
 
 
 def get_key():
     while True:
         event = pygame.event.poll()
-        if event.type == KEYDOWN:
+        if event.type == pygame.KEYDOWN:
             return event.key
         else:
             pass
@@ -52,20 +51,20 @@ def ask(screen, question):
     pygame.font.init()
     current_string = []
 
-    display_box(screen, question + ': ' + string.join(current_string, ''))
+    display_box(screen, question + ': ' + ''.join(current_string))
     while True:
         token = get_key()
-        if token == K_BACKSPACE:
+        if token == pygame.K_BACKSPACE:
             current_string = current_string[0: -1]
-        elif token == K_RETURN:
+        elif token == pygame.K_RETURN:
             break
-        elif token == K_MINUS:
+        elif token == pygame.K_MINUS:
             current_string.append("_")
-        elif token == K_ESCAPE:
+        elif token == pygame.K_ESCAPE:
             return None
         elif token <= 127:
             current_string.append(str(token))
 
-        display_box(screen, question + ': ' + string.join(current_string, ''))
+        display_box(screen, question + ': ' + str(''.join(current_string)))
 
-    return string.join(current_string, '')
+    return ''.join(current_string)

@@ -1,7 +1,10 @@
 import pygame
 import utility.inputbox as inputbox
+import sys
 
 from locations.location import Location
+from locations.game import GameLocation
+from sprites.rectangle import Rectangle
 from sprites.button import Button
 
 
@@ -33,15 +36,20 @@ class StartLocation(Location):
         self.controls_captions.draw(self.window)
 
     def event(self, event):
-        here = 'asd'
-        if event.type == MOUSE_MOTION:
+        if event.type == pygame.MOUSEMOTION:
             for btn in self.controls:
                 if btn.rect.collidepoint(pygame.mouse.get_pos()):
                     btn.change_state(1)
                 else:
                     btn.change_state(0)
-        elif event.type == MOUSE_BUTTON_UP:
+        elif event.type == pygame.MOUSEBUTTONUP:
             if self.start_button.rect.collidepoint(pygame.mouse.get_pos()):
                 name = inputbox.ask(self.window, 'Your name')
                 if name:
-                    self.parent.location = Game
+                    self.parent.location = GameLocation(self.parent, name)
+            elif self.exit_button.rect.collidepoint(pygame.mouse.get_pos()):
+                sys.exit()
+
+    def show_input(self):
+        self.input_surf = Rectangle(300, 100, (0, 191, 255, 200))
+        self.surfaces.append(self.input_surf)
