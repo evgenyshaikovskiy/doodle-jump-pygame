@@ -4,5 +4,12 @@
     "max_fps": 60,
     "start_position_x_axis": 240,
     "start_position_y_axis": 350,
-    "platform_width": 100
+    "platform_width": 100,
+    "platform_count": 10,
+    "gravitation": 0.4,
+    "jump_speed": 15,
+    "spring_speed": 20,
+    "mouse_enabled": "False",
+    "transparent_walls": "True",
+    "middle_line": 300
 }
