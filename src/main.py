@@ -8,11 +8,11 @@ def main():
     DoodleJump(game_settings).run()
 
 
-def parse_settings():
-    with open('src/utility/settings.json') as sgs:
-        settings = json.load(sgs)
+    def parse_settings():
+        with open('src/utility/settings.json') as sgs:
+            settings = json.load(sgs)
 
-    return settings
+        return settings
 
 
 if __name__ == '__main':
