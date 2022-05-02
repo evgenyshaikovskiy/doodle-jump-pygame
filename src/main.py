@@ -1,19 +1,25 @@
-import json
-from game.jumper import DoodleJump
+from jumper import DoodleJump
+from locations.start import StartLocation
+from locations.game import GameLocation
+import utility.loader as sgs
+import pygame
 
 
 # application entry point
 def main():
-    game_settings = parse_settings()
-    DoodleJump(game_settings).run()
+    game = DoodleJump()
+    start_location = StartLocation(game)
+
+    game.location = start_location
+    clock = pygame.time.Clock()
+    while True:
+        clock.tick(sgs.get_setting('max_fps'))
+        game.location.draw()
+        pygame.display.flip()
+        for event in pygame.event.get():
+            game.location.event(event)
+            game.event(event)
 
 
-    def parse_settings():
-        with open('src/utility/settings.json') as sgs:
-            settings = json.load(sgs)
-
-        return settings
-
-
-if __name__ == '__main':
+if __name__ == '__main__':
     main()
