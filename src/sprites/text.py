@@ -7,6 +7,7 @@ from sprites.sprite import Sprite
 class TextSprite(Sprite):
     def __init__(self, x, y, text='',
                  size=35, color=(255, 255, 255)):
+        pygame.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
 

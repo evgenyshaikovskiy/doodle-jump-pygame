@@ -1,11 +1,11 @@
 import pygame
-import utility.loader
+import utility.loader as sgs
 from sprites.sprite import Sprite
 
 
 class Doodle(Sprite):
     # initialize fields
-    alive = 1
+    alive = True
     y_speed = 5
     score = 0
     image_r = pygame.image.load('src/assets/doodle_right.png')
@@ -23,8 +23,8 @@ class Doodle(Sprite):
 
     def _move(self):
         self.rect.center = (self.x, self.y)
-        if self.y >= get_settings('screen_height'):
-            self.alive = 0
+        if self.y >= sgs.get_setting('screen_height'):
+            self.alive = False
 
     def get_legs_rect(self):
         left = self.rect.left + self.rect.width * 0.1

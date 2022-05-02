@@ -10,10 +10,10 @@ class MovingPlatform(Platform):
         self.init_image('src/assets/blue_platform.png')
         # possible states -1 and 1
         self.way = -1
-        self.xSpeed = random.randint(2, 6)
+        self.x_speed = random.randint(2, 6)
         self.spring = None
 
     def move(self):
-        self.move_x(self.xSpeed * self.way)
+        self.move_x(self.x_speed * self.way)
         if 10 < self.x < 19 or 460 < self.x < 469:
             self.way = -self.way

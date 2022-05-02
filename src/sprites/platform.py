@@ -1,13 +1,13 @@
 import pygame
 import random
-import utility.loader
+import utility.loader as sgs
 
 from sprites.sprite import Sprite
 from sprites.spring import Spring
 
 
 class Platform(Sprite):
-    platform_width = get_settings('platform_width')
+    platform_width = sgs.get_setting('platform_width')
 
     def get_surface_area(self):
         left = self.rect.left

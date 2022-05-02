@@ -1,5 +1,5 @@
 import pygame
-from sprites.spring import Sprite
+from sprites.sprite import Sprite
 
 
 class Spring(Sprite):
