@@ -26,13 +26,13 @@ class StartLocation(Location):
 
         self.exit_button = Button(
             settings['screen_width'] / 2,
-            settings['screen_height'] / 2 - 50,
+            settings['screen_height'] / 2,
             'Exit'
         )
 
         self.scoreboard_button = Button(
             settings['screen_width'] / 2,
-            settings['screen_height'] / 2,
+            settings['screen_height'] / 2 - 50,
             'Scoreboard'
         )
 
@@ -66,9 +66,16 @@ class StartLocation(Location):
             if self.start_button.rect.collidepoint(pygame.mouse.get_pos()):
                 name = inputbox.ask(self.window, 'Your name')
                 if name:
-                    self.parent.location = GameLocation(self.parent, name, self.settings)
+                    self.parent.location = GameLocation(
+                        self.parent,
+                        name,
+                        self.settings
+                    )
             elif self.scoreboard_button.rect.collidepoint(pygame.mouse.get_pos()):
-                self.parent.location = ScoreboardLocation(self.parent, self.settings)
+                self.parent.location = ScoreboardLocation(
+                    self.parent,
+                    self.settings
+                )
             elif self.exit_button.rect.collidepoint(pygame.mouse.get_pos()):
                 sys.exit()
 
