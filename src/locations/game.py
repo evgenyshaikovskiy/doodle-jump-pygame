@@ -31,10 +31,10 @@ class GameLocation(Location):
             if isinstance(platform, Platform) and platform.spring is not None:
                 self.allsprites.add(platform.spring)
 
-        self.score_sprite = TextSprite(50, 25, self.doodle.name, 45, (0, 0, 0))
+        self.score_sprite = TextSprite(50, 25, self.doodle.name)
         self.allsprites.add(self.score_sprite)
 
-        color = (0, 191, 255, 128)
+        color = (0, 9, 255)
         self.header = Rectangle(sgs.get_setting('screen_width'), 50, color)
         self.window.blit(self.background, (0, 0))
 
@@ -117,6 +117,12 @@ class GameLocation(Location):
                     sprite.compress()
                     self.doodle.y_speed = sgs.get_setting('spring_speed')
 
+                if isinstance(sprite, Platform) and self.doodle.get_legs_rect().colliderect(sprite.get_surface_area()) and self.doodle.y_speed <= 0:
+                    if isinstance(sprite, CrashingPlatform) and not sprite.crashed:
+                        self.doodle.y_speed = sgs.get_setting('jump_speed')
+                        sprite.crush()
+                        break
+
                 # update platforms
                 if isinstance(sprite, Platform):
                     if sprite.y >= sgs.get_setting('screen_height'):
@@ -125,9 +131,6 @@ class GameLocation(Location):
                         self.allsprites.add(platform)
                         if isinstance(platform, Platform) and platform.spring:
                             self.allsprites.add(platform.spring)
-                            
-                if isinstance(sprite, Platform) and self.doodle.get_legs_rect().colliderect(sprite.get_surface_area()):
-                    self.doodle.y_speed = sgs.get_setting('jump_speed')
 
                 # move for crashed and moving platforms
                 if isinstance(sprite, MovingPlatform) or (isinstance(sprite, CrashingPlatform) and not sprite.crashed):
@@ -140,7 +143,7 @@ class GameLocation(Location):
                         sprite.move_y(self.doodle.y_speed)
 
             self.allsprites.draw(self.window)
-            self.score_sprite.set_text("               %s,    %s" % (self.doodle.name, int(self.doodle.score/10)))
+            self.score_sprite.set_text("adasdafsad")
             self.window.blit(self.header, (0, 0))
         else:
             self.parent.location = GameLocation(self.parent, self.doodle.name)

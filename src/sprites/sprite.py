@@ -27,7 +27,7 @@ class Sprite(pygame.sprite.Sprite):
         self.rect.center = (self.x, self.y)
 
     def init_image(self, path):
-        self.image = pygame.image.load(path).convert()
+        self.image = pygame.image.load(path).convert_alpha()
 
         # ?
         self.image.set_colorkey(self.image.get_at((0, 0)))

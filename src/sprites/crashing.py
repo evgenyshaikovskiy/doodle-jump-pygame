@@ -20,4 +20,4 @@ class CrashingPlatform(Platform):
     def renew(self):
         Platform.renew(self)
         self.init_image('src/assets/red_platform.png')
-        self.crashed = 0
+        self.crashed = True

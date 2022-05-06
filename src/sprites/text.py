@@ -12,7 +12,7 @@ class TextSprite(Sprite):
         self.y = y
 
         # upload font later
-        self.font = pygame.font.Font(None, size)
+        self.font = pygame.font.Font('src/assets/butter_shine_font.ttf', size)
         self.color = color
         self.text = text
         self.generate_image()
@@ -26,7 +26,7 @@ class TextSprite(Sprite):
         self.generate_image()
 
     def set_size(self, size):
-        self.font = pygame.font.Font(None, size)
+        self.font = pygame.font.Font('src/assets/butter_shine_font.ttf', size)
         self.generate_image()
 
     def generate_image(self):
