@@ -23,7 +23,6 @@ class GameLocation(Location):
         pygame.mouse.set_visible(0)
 
         self.doodle = Doodle(name, settings)
-        # self.doodle.name = name
 
         self.allsprites = pygame.sprite.Group()
         self.allsprites.add(self.doodle)
@@ -33,11 +32,9 @@ class GameLocation(Location):
             if isinstance(platform, Platform) and platform.spring is not None:
                 self.allsprites.add(platform.spring)
 
-        self.score_sprite = TextSprite(50, 25, self.doodle.name)
+        self.score_sprite = TextSprite(100, 40, self.doodle.name, 45)
         self.allsprites.add(self.score_sprite)
 
-        color = (0, 0, 0)
-        self.header = Rectangle(settings['screen_width'], 50, color)
         self.window.blit(self.background, (0, 0))
 
         # optional
@@ -145,8 +142,8 @@ class GameLocation(Location):
                         sprite.move_y(self.doodle.y_speed)
 
             self.allsprites.draw(self.window)
-            self.score_sprite.set_text("adasdafsad")
-            self.window.blit(self.header, (0, 0))
+            self.score_sprite.set_text(f'SCORE: {int(self.doodle.score / 10)}.')
+            # self.window.blit(self.header, (0, 0))
         else:
             self.parent.location = GameLocation(self.parent, self.doodle.name, self.settings)
 
