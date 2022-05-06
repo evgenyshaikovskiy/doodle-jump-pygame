@@ -36,7 +36,7 @@ class GameLocation(Location):
         self.score_sprite = TextSprite(50, 25, self.doodle.name)
         self.allsprites.add(self.score_sprite)
 
-        color = (0, 9, 255)
+        color = (0, 0, 0)
         self.header = Rectangle(settings['screen_width'], 50, color)
         self.window.blit(self.background, (0, 0))
 
@@ -121,9 +121,9 @@ class GameLocation(Location):
 
                 if isinstance(sprite, Platform) and self.doodle.get_legs_rect().colliderect(sprite.get_surface_area()) and self.doodle.y_speed <= 0:
                     if isinstance(sprite, CrashingPlatform) and not sprite.crashed:
-                        self.doodle.y_speed = self.settings['jump_speed']
                         sprite.crush()
-                        break
+
+                    self.doodle.y_speed = self.settings['jump_speed']
 
                 # update platforms
                 if isinstance(sprite, Platform):

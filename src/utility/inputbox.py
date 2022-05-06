@@ -46,8 +46,6 @@ def ask(screen, question):
     while typing:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                print(event.key)
-                print(int(event.key))
                 if event.key == pygame.K_RETURN:
                     typing = False
                 elif event.key == pygame.K_BACKSPACE:
