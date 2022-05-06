@@ -2,8 +2,8 @@ from sprites.platform import Platform
 
 
 class CrashingPlatform(Platform):
-    def __init__(self, x, y):
-        Platform.__init__(self, x, y)
+    def __init__(self, x, y, settings):
+        Platform.__init__(self, x, y, settings)
         self.init_image('src/assets/red_platform.png')
         self.y_speed = 10
         self.crashed = False

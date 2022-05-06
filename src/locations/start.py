@@ -9,8 +9,10 @@ from sprites.button import Button
 
 
 class StartLocation(Location):
-    def __init__(self, parent):
-        Location.__init__(self, parent)
+    def __init__(self, parent, settings):
+        Location.__init__(self, parent, settings)
+
+        self.settings = settings
 
         pygame.mouse.set_visible(1)
         pygame.key.set_repeat(0)
@@ -46,7 +48,7 @@ class StartLocation(Location):
             if self.start_button.rect.collidepoint(pygame.mouse.get_pos()):
                 name = inputbox.ask(self.window, 'Your name')
                 if name:
-                    self.parent.location = GameLocation(self.parent, name)
+                    self.parent.location = GameLocation(self.parent, name, self.settings)
             elif self.exit_button.rect.collidepoint(pygame.mouse.get_pos()):
                 sys.exit()
 

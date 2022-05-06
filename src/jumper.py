@@ -1,18 +1,18 @@
 import pygame
 import sys
-import utility.loader as sgs
 
 from locations.game import GameLocation
 from locations.start import StartLocation
 
 
 class DoodleJump:
-    def __init__(self):
+    def __init__(self, settings):
         pygame.init()
+        self.settings = settings
         window = pygame.display.set_mode(
             (
-                sgs.get_setting('screen_width'),
-                sgs.get_setting('screen_height')
+                settings['screen_width'],
+                settings['screen_height']
             )
         )
         pygame.display.set_caption('Not doodle jump yet')
@@ -26,6 +26,6 @@ class DoodleJump:
         elif event.type == pygame.KEYUP:
             if event.type == pygame.K_ESCAPE:
                 if isinstance(self.location, GameLocation):
-                    self.location = StartLocation(self)
+                    self.location = StartLocation(self, settings)
                 elif isinstance(self.location, StartLocation):
                     pass

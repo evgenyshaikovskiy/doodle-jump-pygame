@@ -14,18 +14,20 @@ from sprites.monster import Monster
 
 
 class GameLocation(Location):
-    def __init__(self, parent, name):
-        Location.__init__(self, parent)
+    def __init__(self, parent, name, settings):
+        Location.__init__(self, parent, settings)
+
+        self.settings = settings
 
         pygame.key.set_repeat(10)
         pygame.mouse.set_visible(0)
 
-        self.doodle = Doodle(name)
+        self.doodle = Doodle(name, settings)
         # self.doodle.name = name
 
         self.allsprites = pygame.sprite.Group()
         self.allsprites.add(self.doodle)
-        for i in range(0, sgs.get_setting('platform_count')):
+        for i in range(0, settings['platform_count']):
             self.allsprites.add(self.random_platform(False))
         for platform in self.allsprites:
             if isinstance(platform, Platform) and platform.spring is not None:
@@ -35,7 +37,7 @@ class GameLocation(Location):
         self.allsprites.add(self.score_sprite)
 
         color = (0, 9, 255)
-        self.header = Rectangle(sgs.get_setting('screen_width'), 50, color)
+        self.header = Rectangle(settings['screen_width'], 50, color)
         self.window.blit(self.background, (0, 0))
 
         # optional
@@ -44,7 +46,7 @@ class GameLocation(Location):
     def random_platform(self, top=True):
         x = rand.randint(
             0,
-            sgs.get_setting('screen_width') - sgs.get_setting('platform_width')
+            self.settings['screen_width'] - self.settings['platform_width']
         )
 
         bad_y = []
@@ -56,7 +58,7 @@ class GameLocation(Location):
             if top:
                 y = rand.randint(-100, 50)
             else:
-                y = rand.randint(0, sgs.get_setting('screen_height'))
+                y = rand.randint(0, self.settings['screen_height'])
             good = True
             for bad_y_item in bad_y:
                 if bad_y_item[0] <= y <= bad_y_item[1]:
@@ -65,11 +67,11 @@ class GameLocation(Location):
 
         dig = rand.randint(0, 100)
         if dig < 35:
-            return MovingPlatform(x, y)
+            return MovingPlatform(x, y, self.settings)
         elif dig >= 35 and dig < 50:
-            return CrashingPlatform(x, y)
+            return CrashingPlatform(x, y, self.settings)
         else:
-            return Platform(x, y)
+            return Platform(x, y, self.settings)
 
     def draw(self):
         if self.doodle.alive:
@@ -81,7 +83,7 @@ class GameLocation(Location):
                         rand.randint
                         (
                             0,
-                            sgs.get_setting('screen_width')
+                            self.settings['screen_width']
                         ),
                         rand.randint(-50, 50)
                     )
@@ -99,14 +101,14 @@ class GameLocation(Location):
             self.allsprites.clear(self.window, self.background)
 
             mouse_pos = pygame.mouse.get_pos()
-            self.doodle.increase_y_speed(-sgs.get_setting('gravitation'))
-            if sgs.get_setting('mouse_enabled') == 'True':
+            self.doodle.increase_y_speed(-self.settings['gravitation'])
+            if self.settings['mouse_enabled'] == 'True':
                 self.doodle.set_x(mouse_pos[0])
             else:
-                if sgs.get_setting('transparent_walls') == 'True':
+                if self.settings['transparent_walls'] == 'True':
                     if self.doodle.x < 0:
-                        self.doodle.set_x(sgs.get_setting('screen_width'))
-                    elif self.doodle.x > sgs.get_setting('screen_width'):
+                        self.doodle.set_x(self.settings['screen_width'])
+                    elif self.doodle.x > self.settings['screen_width']:
                         self.doodle.set_x(0)
 
             self.doodle.move_y(-self.doodle.y_speed)
@@ -115,17 +117,17 @@ class GameLocation(Location):
                 # spring under legs => doodle jumps up
                 if isinstance(sprite, Spring) and self.doodle.get_legs_rect().colliderect(sprite.get_top_surface()) and self.doodle.y_speed <= 0:
                     sprite.compress()
-                    self.doodle.y_speed = sgs.get_setting('spring_speed')
+                    self.doodle.y_speed = self.settings['spring_speed']
 
                 if isinstance(sprite, Platform) and self.doodle.get_legs_rect().colliderect(sprite.get_surface_area()) and self.doodle.y_speed <= 0:
                     if isinstance(sprite, CrashingPlatform) and not sprite.crashed:
-                        self.doodle.y_speed = sgs.get_setting('jump_speed')
+                        self.doodle.y_speed = self.settings['jump_speed']
                         sprite.crush()
                         break
 
                 # update platforms
                 if isinstance(sprite, Platform):
-                    if sprite.y >= sgs.get_setting('screen_height'):
+                    if sprite.y >= self.settings['screen_height']:
                         self.allsprites.remove(sprite)
                         platform = self.random_platform()
                         self.allsprites.add(platform)
@@ -136,7 +138,7 @@ class GameLocation(Location):
                 if isinstance(sprite, MovingPlatform) or (isinstance(sprite, CrashingPlatform) and not sprite.crashed):
                     sprite.move()
 
-            if self.doodle.y < sgs.get_setting('middle_line'):
+            if self.doodle.y < self.settings['middle_line']:
                 self.doodle.increase_score(self.doodle.y_speed)
                 for sprite in self.allsprites:
                     if not isinstance(sprite, TextSprite):
@@ -146,7 +148,7 @@ class GameLocation(Location):
             self.score_sprite.set_text("adasdafsad")
             self.window.blit(self.header, (0, 0))
         else:
-            self.parent.location = GameLocation(self.parent, self.doodle.name)
+            self.parent.location = GameLocation(self.parent, self.doodle.name, self.settings)
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:

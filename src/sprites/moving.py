@@ -5,8 +5,8 @@ from sprites.platform import Platform
 
 
 class MovingPlatform(Platform):
-    def __init__(self, x, y):
-        Platform.__init__(self, x, y)
+    def __init__(self, x, y, settings):
+        Platform.__init__(self, x, y, settings)
         self.init_image('src/assets/blue_platform.png')
         # possible states -1 and 1
         self.way = -1
