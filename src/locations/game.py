@@ -4,6 +4,7 @@ import random as rand
 
 from sprites.platform import Platform
 from locations.location import Location
+
 from sprites.doodle import Doodle
 from sprites.spring import Spring
 from sprites.text import TextSprite
@@ -143,7 +144,6 @@ class GameLocation(Location):
 
             self.allsprites.draw(self.window)
             self.score_sprite.set_text(f'SCORE: {int(self.doodle.score / 10)}.')
-            # self.window.blit(self.header, (0, 0))
         else:
             self.parent.location = GameLocation(self.parent, self.doodle.name, self.settings)
 
