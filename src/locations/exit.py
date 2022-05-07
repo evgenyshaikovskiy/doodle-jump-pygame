@@ -7,3 +7,9 @@ class ExitLocation(Location):
         Location.__init__(self, parent, settings)
         self.background = pygame.image.load('src/assets/background.png')
         print('Exiting...')
+
+    def draw(self):
+        pass
+
+    def event(self, event):
+        pass

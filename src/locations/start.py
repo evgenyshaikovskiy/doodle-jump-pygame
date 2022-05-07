@@ -5,6 +5,8 @@ import sys
 from locations.location import Location
 from locations.game import GameLocation
 from locations.scoreboard import ScoreboardLocation
+from locations.input import InputLocation
+
 from sprites.rectangle import Rectangle
 from sprites.button import Button
 
@@ -12,8 +14,6 @@ from sprites.button import Button
 class StartLocation(Location):
     def __init__(self, parent, settings):
         Location.__init__(self, parent, settings)
-
-        self.settings = settings
 
         pygame.mouse.set_visible(1)
         pygame.key.set_repeat(0)
@@ -64,13 +64,17 @@ class StartLocation(Location):
                     btn.change_state(0)
         elif event.type == pygame.MOUSEBUTTONUP:
             if self.start_button.rect.collidepoint(pygame.mouse.get_pos()):
-                name = inputbox.ask(self.window, 'Your name')
-                if name:
-                    self.parent.location = GameLocation(
-                        self.parent,
-                        name,
-                        self.settings
-                    )
+                self.parent.location = InputLocation(
+                    self.parent,
+                    self.settings,
+                )
+                # name = inputbox.ask(self.window, 'Your name')
+                # if name:
+                #     self.parent.location = GameLocation(
+                #         self.parent,
+                #         name,
+                #         self.settings
+                #     )
             elif self.scoreboard_button.rect.collidepoint(pygame.mouse.get_pos()):
                 self.parent.location = ScoreboardLocation(
                     self.parent,
@@ -78,7 +82,3 @@ class StartLocation(Location):
                 )
             elif self.exit_button.rect.collidepoint(pygame.mouse.get_pos()):
                 sys.exit()
-
-    def show_input(self):
-        self.input_surf = Rectangle(500, 100, (0, 191, 255, 200))
-        self.surfaces.append(self.input_surf)

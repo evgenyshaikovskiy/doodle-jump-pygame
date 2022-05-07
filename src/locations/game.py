@@ -18,8 +18,6 @@ class GameLocation(Location):
     def __init__(self, parent, name, settings):
         Location.__init__(self, parent, settings)
 
-        self.settings = settings
-
         pygame.key.set_repeat(10)
         pygame.mouse.set_visible(0)
 
