@@ -15,7 +15,7 @@ class Button(Sprite):
         self.image_selected = pygame.image.load('src/assets/menu_selected.png')
         self.image_unselected = pygame.image.load('src/assets/menu_unselected.png')
 
-        self.text_sprite = TextSprite(self.x, self.y, text, 45)
+        self.text_sprite = TextSprite(self.x, self.y, text, 30)
         self.change_state(0)
 
     def change_state(self, state):

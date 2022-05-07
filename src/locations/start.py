@@ -1,5 +1,4 @@
 import pygame
-import utility.inputbox as inputbox
 import sys
 
 from locations.location import Location
@@ -19,7 +18,7 @@ class StartLocation(Location):
         pygame.key.set_repeat(0)
 
         self.start_button = Button(
-            settings['screen_width'] / 2 ,
+            settings['screen_width'] / 2,
             settings['screen_height'] / 2 - 100,
             'Start'
         )
@@ -68,13 +67,6 @@ class StartLocation(Location):
                     self.parent,
                     self.settings,
                 )
-                # name = inputbox.ask(self.window, 'Your name')
-                # if name:
-                #     self.parent.location = GameLocation(
-                #         self.parent,
-                #         name,
-                #         self.settings
-                #     )
             elif self.scoreboard_button.rect.collidepoint(pygame.mouse.get_pos()):
                 self.parent.location = ScoreboardLocation(
                     self.parent,

@@ -1,6 +1,9 @@
 import pygame
+import utility.inputbox as inputbox
+
 
 from locations.location import Location
+from locations.game import GameLocation
 
 
 class InputLocation(Location):
@@ -8,12 +11,13 @@ class InputLocation(Location):
         Location.__init__(self, parent, settings)
 
         pygame.mouse.set_visible(False)
-        pygame.key.set_repeat(1)
 
         self.controls = pygame.sprite.Group()
         self.controls_captions = pygame.sprite.Group()
 
-        self.name = None
+        self.window.blit(self.background, (0, 0))
+
+        self.name = inputbox.ask(self.window, 'Input name')
 
     def draw(self):
         self.controls.clear(self.window, self.background)
@@ -22,8 +26,7 @@ class InputLocation(Location):
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_KP_ENTER:
-                # self.name = 
+            if event.key == pygame.K_SPACE:
                 if self.name is not None:
                     self.parent.location = GameLocation(
                         self.parent,

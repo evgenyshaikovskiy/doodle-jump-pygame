@@ -3,18 +3,19 @@ from pygame.locals import *
 
 
 def display_box(screen, message):
-    fontobject = pygame.font.Font(None, 18)
+    fontobject = pygame.font.Font('src/assets/papernotes_font.ttf', 25)
 
     pygame.draw.rect(
         screen,
         (0, 0, 0),
         (
-            (screen.get_width() / 2) - 100,
+            (screen.get_width() / 2) - 200,
             (screen.get_height() / 2) - 10,
-            200,
-            20),
+            350,
+            50),
         0
     )
+
     # pygame.draw.rect(
     #     screen,
     #     (255, 255, 255),
@@ -46,7 +47,7 @@ def ask(screen, question):
     while typing:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_KP_ENTER:
                     typing = False
                 elif event.key == pygame.K_BACKSPACE:
                     text = text[:-1]
