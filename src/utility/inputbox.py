@@ -47,7 +47,7 @@ def ask(screen, question):
     while typing:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_KP_ENTER:
+                if event.key == pygame.K_SPACE:
                     typing = False
                 elif event.key == pygame.K_BACKSPACE:
                     text = text[:-1]

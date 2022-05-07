@@ -2,9 +2,11 @@ import pygame
 import utility.loader as sgs
 import random as rand
 
-from sprites.platform import Platform
+from utility.score import ScoreService
+
 from locations.location import Location
 
+from sprites.platform import Platform
 from sprites.doodle import Doodle
 from sprites.spring import Spring
 from sprites.text import TextSprite
@@ -22,6 +24,8 @@ class GameLocation(Location):
         pygame.mouse.set_visible(0)
 
         self.doodle = Doodle(name, settings)
+
+        self.score_service = ScoreService(name)
 
         self.allsprites = pygame.sprite.Group()
         self.allsprites.add(self.doodle)
@@ -141,9 +145,15 @@ class GameLocation(Location):
                         sprite.move_y(self.doodle.y_speed)
 
             self.allsprites.draw(self.window)
-            self.score_sprite.set_text(f'SCORE: {int(self.doodle.score / 10)}.')
+            self.score = int(self.doodle.score / 10)
+            self.score_sprite.set_text(f'SCORE: {self.score}.')
         else:
-            self.parent.location = GameLocation(self.parent, self.doodle.name, self.settings)
+            self.parent.location = GameLocation(
+                self.parent,
+                self.doodle.name,
+                self.settings
+            )
+            self.score_service.update_score(self.score)
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
