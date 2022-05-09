@@ -4,7 +4,7 @@
     "max_fps": 60,
     "start_position_x_axis": 500,
     "start_position_y_axis": 350,
-    "platform_width": 110,
+    "platform_width": 100,
     "platform_count": 15,
     "gravitation": 0.4,
     "jump_speed": 15,

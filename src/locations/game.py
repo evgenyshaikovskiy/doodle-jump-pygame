@@ -45,13 +45,13 @@ class GameLocation(Location):
 
     def random_platform(self, top=True):
         x = rand.randint(
-            0,
+            self.settings['platform_width'],
             self.settings['screen_width'] - self.settings['platform_width']
         )
 
         bad_y = []
         for sprite in self.allsprites:
-            bad_y.append((sprite.y - 7, sprite.y + 7, sprite.rect.height))
+            bad_y.append((sprite.y - 7, sprite.y + 7 + sprite.rect.height))
 
         good = False
         while not good:
@@ -120,23 +120,27 @@ class GameLocation(Location):
                     self.doodle.y_speed = self.settings['spring_speed']
 
                 if isinstance(sprite, Platform) and self.doodle.get_legs_rect().colliderect(sprite.get_surface_area()) and self.doodle.y_speed <= 0:
-                    if isinstance(sprite, CrashingPlatform) and not sprite.crashed:
-                        sprite.crush()
+                    if isinstance(sprite, CrashingPlatform):
+                        if sprite.crashed:
+                            continue
+                        else:
+                            sprite.crush()
 
                     self.doodle.y_speed = self.settings['jump_speed']
+
+                # move for crashed and moving platforms
+                if isinstance(sprite, MovingPlatform):
+                    sprite.move()
 
                 # update platforms
                 if isinstance(sprite, Platform):
                     if sprite.y >= self.settings['screen_height']:
                         self.allsprites.remove(sprite)
+                        self.allsprites.remove(sprite.spring)
                         platform = self.random_platform()
                         self.allsprites.add(platform)
                         if isinstance(platform, Platform) and platform.spring:
                             self.allsprites.add(platform.spring)
-
-                # move for crashed and moving platforms
-                if isinstance(sprite, MovingPlatform) or (isinstance(sprite, CrashingPlatform) and not sprite.crashed):
-                    sprite.move()
 
             if self.doodle.y < self.settings['middle_line']:
                 self.doodle.increase_score(self.doodle.y_speed)
@@ -144,7 +148,7 @@ class GameLocation(Location):
                     if not isinstance(sprite, TextSprite):
                         sprite.move_y(self.doodle.y_speed)
 
-            self.allsprites.draw(self.window)
+            print(len(self.allsprites))
             self.score = int(self.doodle.score / 10)
             self.score_sprite.set_text(f'SCORE: {self.score}.')
         else:
