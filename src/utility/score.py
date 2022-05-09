@@ -1,4 +1,5 @@
 import json
+import os
 
 
 class ScoreService:
@@ -20,10 +21,13 @@ class ScoreService:
             self.__update_scoreboard__(scores)
 
     def __upload_scoreboard__(self):
-        with open('src/utility/scores.json', 'r', encoding='UTF-8') as score_file:
-            scores = json.load(score_file)
+        if os.path.exists('src/utility/scores.json'):
+            with open('src/utility/scores.json', 'r', encoding='UTF-8') as score_file:
+                scores = json.load(score_file)
 
-        return scores
+            return scores
+        else:
+            return {}
 
     def __update_scoreboard__(self, scores):
         updated = json.dumps(scores, indent=4)

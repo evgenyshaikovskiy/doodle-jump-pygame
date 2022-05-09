@@ -4,6 +4,7 @@ import sys
 from locations.game import GameLocation
 from locations.start import StartLocation
 from locations.input import InputLocation
+from locations.scoreboard import ScoreboardLocation
 
 
 class DoodleJump:
@@ -28,6 +29,6 @@ class DoodleJump:
             if event.key == pygame.K_ESCAPE:
                 if isinstance(self.location, StartLocation):
                     return
-                if isinstance(self.location, GameLocation) or isinstance(self.location, InputLocation):
+                if isinstance(self.location, GameLocation) or isinstance(self.location, InputLocation) or isinstance(self.location, ScoreboardLocation):
                     self.location = StartLocation(self, self.settings)
                     return
