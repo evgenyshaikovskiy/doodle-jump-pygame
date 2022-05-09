@@ -75,34 +75,34 @@ class GameLocation(Location):
 
     def draw(self):
         if self.doodle.alive:
-            if self.monster is None:
-                case = rand.randint(-1000, 5)
-                if case > 0:
-                    self.monster = Monster
-                    (
-                        rand.randint
-                        (
-                            0,
-                            self.settings['screen_width']
-                        ),
-                        rand.randint(-50, 50)
-                    )
-                    # self.allsprites.add(self.monster)
-                    # self.monster.move()
+            # if self.monster is None:
+            #     case = rand.randint(-1000, 5)
+            #     if case > 0:
+            #         self.monster = Monster
+            #         (
+            #             rand.randint
+            #             (
+            #                 0,
+            #                 self.settings['screen_width']
+            #             ),
+            #             rand.randint(-50, 50)
+            #         )
+            #         self.allsprites.add(self.monster)
+            #         self.monster.move()
             # else:
-                # self.monster.move()
-
-                # if self.doodle.rect.colliderect(self.monster.rect):
-                #     self.doodle.alive == 0
-                # if self.monster.y >= sgs.get_setting('screen_height'):
-                #     self.allsprites.remove(self.monster)
-                #     self.monster = None
+            #     self.monster.move
+            #     if self.doodle.rect.colliderect(self.monster.rect):
+            #         self.doodle.alive == 0
+            #     if self.monster.y >= sgs.get_setting('screen_height'):
+            #         self.allsprites.remove(self.monster)
+            #         self.monster = None
 
             self.allsprites.clear(self.window, self.background)
 
-            mouse_pos = pygame.mouse.get_pos()
             self.doodle.increase_y_speed(-self.settings['gravitation'])
+
             if self.settings['mouse_enabled'] == 'True':
+                mouse_pos = pygame.mouse.get_pos()
                 self.doodle.set_x(mouse_pos[0])
             else:
                 if self.settings['transparent_walls'] == 'True':

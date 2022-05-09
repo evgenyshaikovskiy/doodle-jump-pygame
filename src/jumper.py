@@ -22,7 +22,6 @@ class DoodleJump:
         self.location = None
 
     def event(self, event):
-        # ??
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
