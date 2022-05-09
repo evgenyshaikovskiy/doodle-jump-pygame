@@ -11,8 +11,7 @@ class DoodleJump:
     def __init__(self, settings):
         pygame.init()
         self.settings = settings
-        window = pygame.display.set_mode(
-            (
+        window = pygame.display.set_mode((
                 settings['screen_width'],
                 settings['screen_height']
             )

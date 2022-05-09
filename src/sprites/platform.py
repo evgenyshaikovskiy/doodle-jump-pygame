@@ -14,10 +14,14 @@ class Platform(Sprite):
             self.init_image('src/assets/green_platform.png')
             rnd = random.randint(-100, 100)
             if rnd >= 0:
-                self.spring = Spring(self.x + random.randint(
-                    -int(self.platform_width / 2 - 10),
-                    int(self.platform_width / 2) - 10),
-                                    self.y - 20)
+                self.spring = Spring(
+                    self.x + random.randint
+                    (
+                        -int(self.platform_width / 2 - 10),
+                        int(self.platform_width / 2) - 10
+                    ),
+                    self.y - 20
+                )
             else:
                 self.spring = None
 

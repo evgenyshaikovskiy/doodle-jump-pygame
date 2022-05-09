@@ -24,6 +24,7 @@ class GameLocation(Location):
         pygame.mouse.set_visible(0)
 
         self.doodle = Doodle(name, settings)
+        self.draw
 
         self.score_service = ScoreService(name)
 
@@ -149,6 +150,7 @@ class GameLocation(Location):
                         sprite.move_y(self.doodle.y_speed)
 
             print(len(self.allsprites))
+            self.allsprites.draw(self.window)
             self.score = int(self.doodle.score / 10)
             self.score_sprite.set_text(f'SCORE: {self.score}.')
         else:
