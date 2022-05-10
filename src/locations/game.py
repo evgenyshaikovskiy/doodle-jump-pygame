@@ -3,6 +3,7 @@ import utility.loader as sgs
 import random as rand
 
 from utility.score import ScoreService
+from utility.sound import SoundService
 
 from locations.location import Location
 
@@ -26,6 +27,7 @@ class GameLocation(Location):
         self.doodle = Doodle(name, settings)
 
         self.score_service = ScoreService(name)
+        self.sound_service = SoundService()
 
         self.allsprites = pygame.sprite.Group()
         self.allsprites.add(self.doodle)
@@ -42,6 +44,7 @@ class GameLocation(Location):
 
         # optional
         self.monster = None
+        self.sound_service.on_start()
 
     def random_platform(self, top=True):
         x = rand.randint(
@@ -116,6 +119,7 @@ class GameLocation(Location):
             for sprite in self.allsprites:
                 # spring under legs => doodle jumps up
                 if isinstance(sprite, Spring) and self.doodle.get_legs_rect().colliderect(sprite.get_top_surface()) and self.doodle.y_speed <= 0:
+                    self.sound_service.on_spring()
                     sprite.compress()
                     self.doodle.y_speed = self.spring_speed
 
@@ -126,6 +130,7 @@ class GameLocation(Location):
                         else:
                             sprite.crush()
 
+                    self.sound_service.on_jump()
                     self.doodle.y_speed = self.jump_speed
 
                 # move for crashed and moving platforms
