@@ -24,13 +24,12 @@ class GameLocation(Location):
         pygame.mouse.set_visible(0)
 
         self.doodle = Doodle(name, settings)
-        self.draw
 
         self.score_service = ScoreService(name)
 
         self.allsprites = pygame.sprite.Group()
         self.allsprites.add(self.doodle)
-        for i in range(0, settings['platform_count']):
+        for i in range(0, self.platform_count):
             self.allsprites.add(self.random_platform(False))
         for platform in self.allsprites:
             if isinstance(platform, Platform) and platform.spring is not None:
@@ -46,20 +45,20 @@ class GameLocation(Location):
 
     def random_platform(self, top=True):
         x = rand.randint(
-            self.settings['platform_width'],
-            self.settings['screen_width'] - self.settings['platform_width']
+            self.platform_width,
+            self.screen_width - self.platform_width
         )
 
         bad_y = []
         for sprite in self.allsprites:
-            bad_y.append((sprite.y - 15, sprite.y + 15 + sprite.rect.height))
+            bad_y.append((sprite.y - 7, sprite.y + 7 + sprite.rect.height))
 
         good = False
         while not good:
             if top:
                 y = rand.randint(-100, 50)
             else:
-                y = rand.randint(0, self.settings['screen_height'])
+                y = rand.randint(0, self.screen_height)
             good = True
             for bad_y_item in bad_y:
                 if bad_y_item[0] <= y <= bad_y_item[1]:
@@ -100,16 +99,16 @@ class GameLocation(Location):
 
             self.allsprites.clear(self.window, self.background)
 
-            self.doodle.increase_y_speed(-self.settings['gravitation'])
+            self.doodle.increase_y_speed(-self.gravitation)
 
-            if self.settings['mouse_enabled'] == 'True':
+            if self.mouse_enabled == 'True':
                 mouse_pos = pygame.mouse.get_pos()
                 self.doodle.set_x(mouse_pos[0])
             else:
-                if self.settings['transparent_walls'] == 'True':
+                if self.transparent_walls == 'True':
                     if self.doodle.x < 0:
-                        self.doodle.set_x(self.settings['screen_width'])
-                    elif self.doodle.x > self.settings['screen_width']:
+                        self.doodle.set_x(self.screen_width)
+                    elif self.doodle.x > self.screen_width:
                         self.doodle.set_x(0)
 
             self.doodle.move_y(-self.doodle.y_speed)
@@ -118,7 +117,7 @@ class GameLocation(Location):
                 # spring under legs => doodle jumps up
                 if isinstance(sprite, Spring) and self.doodle.get_legs_rect().colliderect(sprite.get_top_surface()) and self.doodle.y_speed <= 0:
                     sprite.compress()
-                    self.doodle.y_speed = self.settings['spring_speed']
+                    self.doodle.y_speed = self.spring_speed
 
                 if isinstance(sprite, Platform) and self.doodle.get_legs_rect().colliderect(sprite.get_surface_area()) and self.doodle.y_speed <= 0:
                     if isinstance(sprite, CrashingPlatform):
@@ -127,7 +126,7 @@ class GameLocation(Location):
                         else:
                             sprite.crush()
 
-                    self.doodle.y_speed = self.settings['jump_speed']
+                    self.doodle.y_speed = self.jump_speed
 
                 # move for crashed and moving platforms
                 if isinstance(sprite, MovingPlatform):
@@ -135,7 +134,7 @@ class GameLocation(Location):
 
                 # update platforms
                 if isinstance(sprite, Platform):
-                    if sprite.y >= self.settings['screen_height']:
+                    if sprite.y >= self.screen_height:
                         self.allsprites.remove(sprite)
                         self.allsprites.remove(sprite.spring)
                         platform = self.random_platform()
@@ -143,7 +142,7 @@ class GameLocation(Location):
                         if isinstance(platform, Platform) and platform.spring:
                             self.allsprites.add(platform.spring)
 
-            if self.doodle.y < self.settings['middle_line']:
+            if self.doodle.y < self.middle_line:
                 self.doodle.increase_score(self.doodle.y_speed)
                 for sprite in self.allsprites:
                     if not isinstance(sprite, TextSprite):
