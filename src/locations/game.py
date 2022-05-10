@@ -52,7 +52,7 @@ class GameLocation(Location):
 
         bad_y = []
         for sprite in self.allsprites:
-            bad_y.append((sprite.y - 7, sprite.y + 7 + sprite.rect.height))
+            bad_y.append((sprite.y - 15, sprite.y + 15 + sprite.rect.height))
 
         good = False
         while not good:
