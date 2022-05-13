@@ -25,11 +25,9 @@ class InputLocation(Location):
         self.controls_captions.draw(self.window)
 
     def event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                if self.name is not None:
-                    self.parent.location = GameLocation(
-                        self.parent,
-                        self.name,
-                        self.settings
-                    )
+        if self.name is not None:
+            self.parent.location = GameLocation(
+                self.parent,
+                self.name,
+                self.settings
+            )

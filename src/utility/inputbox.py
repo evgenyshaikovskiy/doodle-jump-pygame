@@ -42,12 +42,13 @@ def display_box(screen, message):
 def ask(screen, question):
     pygame.font.init()
     text: str = ''
-    display_box(screen, question + ':' + text)
+    display_box(screen, question + ':  ' + text)
     typing = True
     while typing:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                # Enter button
+                if (event.key) == 13:
                     typing = False
                 elif event.key == pygame.K_BACKSPACE:
                     text = text[:-1]
