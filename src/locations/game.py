@@ -124,6 +124,8 @@ class GameLocation(Location):
                     self.doodle.y_speed = self.spring_speed
 
                 if isinstance(sprite, Platform) and self.doodle.get_legs_rect().colliderect(sprite.get_surface_area()) and self.doodle.y_speed <= 0:
+                    self.doodle.rect.bottom = sprite.rect.top
+
                     if isinstance(sprite, CrashingPlatform):
                         if sprite.crashed:
                             continue
@@ -132,7 +134,7 @@ class GameLocation(Location):
                             self.doodle.y_speed = self.jump_speed
                             sprite.crush()
                             continue
-
+                    
                     self.sound_service.on_jump()
                     self.doodle.y_speed = self.jump_speed
 
@@ -156,7 +158,6 @@ class GameLocation(Location):
                     if not isinstance(sprite, TextSprite):
                         sprite.move_y(self.doodle.y_speed)
 
-            print(len(self.allsprites))
             self.allsprites.draw(self.window)
             self.score = int(self.doodle.score / 10)
             self.score_sprite.set_text(f'SCORE: {self.score}.')
