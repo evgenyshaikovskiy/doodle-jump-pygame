@@ -119,6 +119,7 @@ class GameLocation(Location):
             for sprite in self.allsprites:
                 # spring under legs => doodle jumps up
                 if isinstance(sprite, Spring) and self.doodle.get_legs_rect().colliderect(sprite.get_top_surface()) and self.doodle.y_speed <= 0:
+                    self.doodle.rect.bottom = sprite.rect.top
                     self.sound_service.on_spring()
                     sprite.compress()
                     self.doodle.y_speed = self.spring_speed
@@ -134,7 +135,7 @@ class GameLocation(Location):
                             self.doodle.y_speed = self.jump_speed
                             sprite.crush()
                             continue
-                    
+
                     self.sound_service.on_jump()
                     self.doodle.y_speed = self.jump_speed
 
