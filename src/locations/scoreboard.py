@@ -40,15 +40,22 @@ class ScoreboardLocation(Location):
         if len(sorted_scores) > 10:
             sorted_scores = sorted_scores[:10]
 
-        x_align = 450
+        x_align = 400
         y_align = 150
         for key_value in sorted_scores:
             record = TextSprite(
                 x_align,
                 y_align,
-                text=f'{key_value[0]} - {key_value[1]}'
+                text=f'{key_value[0]}'
             )
 
+            y_align += 50
+            self.controls_captions.add(record)
+
+        y_align = 150
+        x_align = 600
+        for key_value in sorted_scores:
+            record = TextSprite(x_align, y_align, text=f'{key_value[1]}')
             y_align += 50
             self.controls_captions.add(record)
 
