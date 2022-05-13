@@ -6,6 +6,7 @@ class SoundService:
         self.jump_sound = pg.mixer.Sound('src/assets/jump.wav')
         self.spring_sound = pg.mixer.Sound('src/assets/springshoes.wav')
         self.start_sound = pg.mixer.Sound('src/assets/start.wav')
+        self.crash_sound = pg.mixer.Sound('src/assets/breaking-arcade.wav')
 
     def on_jump(self):
         self.__play_sound__(self.jump_sound)
@@ -15,6 +16,9 @@ class SoundService:
 
     def on_start(self):
         self.__play_sound__(self.start_sound)
+
+    def on_crushing(self):
+        self.__play_sound__(self.crash_sound)
 
     def __play_sound__(self, sound):
         pg.mixer.Sound.play(sound)

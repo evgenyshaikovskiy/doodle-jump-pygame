@@ -128,7 +128,10 @@ class GameLocation(Location):
                         if sprite.crashed:
                             continue
                         else:
+                            self.sound_service.on_crushing()
+                            self.doodle.y_speed = self.jump_speed
                             sprite.crush()
+                            continue
 
                     self.sound_service.on_jump()
                     self.doodle.y_speed = self.jump_speed
