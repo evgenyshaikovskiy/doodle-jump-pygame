@@ -15,5 +15,5 @@ class MovingPlatform(Platform):
 
     def move(self):
         self.move_x(self.x_speed * self.way)
-        if 10 < self.x < 19 or 790 < self.x < 800:
+        if 10 < self.x < 100 or 700 < self.x < 800:
             self.way = -self.way

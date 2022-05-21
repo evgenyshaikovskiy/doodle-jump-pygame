@@ -11,10 +11,8 @@ from sprites.platform import Platform
 from sprites.doodle import Doodle
 from sprites.spring import Spring
 from sprites.text import TextSprite
-from sprites.rectangle import Rectangle
 from sprites.moving import MovingPlatform
 from sprites.crashing import CrashingPlatform
-from sprites.monster import Monster
 
 
 class GameLocation(Location):
@@ -54,7 +52,7 @@ class GameLocation(Location):
 
         bad_y = []
         for sprite in self.allsprites:
-            bad_y.append((sprite.y - 10, sprite.y + 10 + sprite.rect.height))
+            bad_y.append((sprite.y - 15, sprite.y + 15 + sprite.rect.height))
 
         good = False
         while not good:
@@ -78,28 +76,6 @@ class GameLocation(Location):
 
     def draw(self):
         if self.doodle.alive:
-            # if self.monster is None:
-            #     case = rand.randint(-1000, 5)
-            #     if case > 0:
-            #         self.monster = Monster
-            #         (
-            #             rand.randint
-            #             (
-            #                 0,
-            #                 self.settings['screen_width']
-            #             ),
-            #             rand.randint(-50, 50)
-            #         )
-            #         self.allsprites.add(self.monster)
-            #         self.monster.move()
-            # else:
-            #     self.monster.move
-            #     if self.doodle.rect.colliderect(self.monster.rect):
-            #         self.doodle.alive == 0
-            #     if self.monster.y >= sgs.get_setting('screen_height'):
-            #         self.allsprites.remove(self.monster)
-            #         self.monster = None
-
             self.allsprites.clear(self.window, self.background)
 
             self.doodle.increase_y_speed(-self.gravitation)
